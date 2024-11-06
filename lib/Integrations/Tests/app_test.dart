@@ -8,22 +8,16 @@ Future<void> clickButton() async {
     'platformName': 'Android',
     'appium:deviceName': 'Hassan_Pro', // Change as needed for your emulator/device
     'appium:automationName': 'Flutter',
-    'appium:app': 'C:\\Users\\Hassan\\Desktop\\DefaultApp\\build\\app\\outputs\\flutter-apk\\app-debug.apk',
-    'appium:autoWebview': true,
-    'appium:appPackage': "com.example.appium_test",
-    'appium:appActivity': "com.example.appium_test.MainActivity",
-    'appium:observatoryWsUri': "http://127.0.0.1:4723/",
-    'appium:ensureWebviewsHavePages': true,
-    'appium:chromedriver_autodownload': true,
-    'appium:chromedriverExecutable': 'C:\\Users\\Hassan\\Downloads\\chromedriver-win64\\chromedriver.exe',
+    'appium:app': 'C:\\Users\\Hassan\\Desktop\\DefaultApp\\Default_Flutter_App\\build\\app\\outputs\\flutter-apk\\app-debug.apk',
     'noReset': true,
     'fullReset': false,
   };
 
   // Connect to Appium server
   final AppiumWebDriver driver = await createDriver(
-    uri: Uri.parse('http://192.168.30.187:4723/'), // Appium server URL
+    uri: Uri.parse('http://192.168.30.217:8000/'), // Appium server URL
     desired: capabilities,
+    spec: WebDriverSpec.Auto,
   );
 
   try {

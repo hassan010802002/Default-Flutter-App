@@ -1,11 +1,24 @@
 import 'dart:developer';
 
-import 'package:appium_test/Integrations/Tests/app_test.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import 'Service/automation_service.dart';
+
 void main() {
-  // IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  // FlutterDriver? driver;
+  //
+  // setUpAll(() async {
+  //   driver = await FlutterDriver.connect(
+  //     dartVmServiceUrl: "http://192.168.30.217:5000/W0WPGA3IHhg=/ws",
+  //   );
+  // });
+  //
+  // tearDownAll(() async {
+  //   if (driver != null) {
+  //     driver!.close();
+  //   }
+  // });
   runApp(const MyApp());
 }
 
@@ -48,15 +61,13 @@ class _MyHomePageState extends State<MyHomePage> {
               _isPageLoaded = true;
             });
             if (_isPageLoaded) {
-              await clickButton();
+              // await clickButton();
+              await triggerButtonClick();
             }
           },
           onHttpError: (HttpResponseError error) {},
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
-            if (request.url.startsWith('https://www.youtube.com/')) {
-              return NavigationDecision.prevent;
-            }
             return NavigationDecision.navigate;
           },
         ),

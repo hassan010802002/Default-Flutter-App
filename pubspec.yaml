@@ -39,6 +39,7 @@ dependencies:
   webdriver:
   appium_driver:
   test:
+  http:
 
 
 dev_dependencies:
