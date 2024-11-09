@@ -8,8 +8,8 @@ Future<void> triggerButtonClick() async {
 
   try {
     final response = await http.post(url);
+    log("Appium Server Response is: ${response.body}", name: "appium service");
     final responseData = json.decode(response.body);
-    log("Appium Server Response is: $responseData", name: "appium service");
     if (responseData['status'] == 'success') {
       print("Button click triggered successfully.");
     } else {

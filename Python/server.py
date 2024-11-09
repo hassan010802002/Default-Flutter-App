@@ -3,7 +3,7 @@ from appium_automation import automate_webview_button_click
 
 app = Flask(__name__)
 
-@app.route('/click-button', methods=['GET'])
+@app.route('/click-button', methods=['POST'])
 def click_button():
     try:
         automate_webview_button_click()

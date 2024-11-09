@@ -1,9 +1,8 @@
 import 'dart:developer';
 
+import 'package:appium_test/Service/automation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
-import 'Service/automation_service.dart';
 
 void main() {
   // FlutterDriver? driver;
@@ -27,9 +26,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MyHomePage(),
+      home: TempScreen(),
     );
   }
 }
@@ -61,9 +60,9 @@ class _MyHomePageState extends State<MyHomePage> {
               _isPageLoaded = true;
             });
             if (_isPageLoaded) {
-              // await clickButton();
               await triggerButtonClick();
             }
+            if (url.toString().contains("")) {}
           },
           onHttpError: (HttpResponseError error) {},
           onWebResourceError: (WebResourceError error) {},
@@ -72,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
           },
         ),
       )
-      ..loadRequest(Uri.parse('https://flutter.dev'));
+      ..loadRequest(Uri.parse('https://www.iobnet.co.in/ibanking/corplogin.do'));
     super.initState();
   }
 
@@ -82,6 +81,42 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SafeArea(
         child: WebViewWidget(
           controller: _webController!,
+        ),
+      ),
+    );
+  }
+}
+
+class TempScreen extends StatelessWidget {
+  TempScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              textStyle: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
+              ),
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+              elevation: 8.0,
+              minimumSize: const Size(100.0, 50.0),
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              alignment: AlignmentDirectional.center,
+              padding: const EdgeInsetsDirectional.symmetric(horizontal: 12.0, vertical: 8.0),
+            ),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const MyHomePage(),
+                  ));
+            },
+            child: const Text('Start'),
+          ),
         ),
       ),
     );
