@@ -67,9 +67,7 @@ def automate_webview_button_click(server_url, app_path, chromedriver_path, devic
         
         captcha_text = extractCaptchaText(appiumDriver=driver)
 
-        length = len(captcha_text)
-
-        verifyCaptchaData(appiumDriver=driver,length=length)
+        verifyCaptchaData(appiumDriver=driver,captchaText=captcha_text)
 
         driver.implicitly_wait(2)
         
@@ -135,12 +133,12 @@ def extractCaptchaText(appiumDriver):
     return captcha_text
 
 
-def verifyCaptchaData(appiumDriver,length):
-    print("Captcha Text Length is: ",length)
+def verifyCaptchaData(appiumDriver,captchaText):
+    print("Captcha Text is: ",captchaText)
     appiumDriver.implicitly_wait(5)
-    if length == 6:
+    if len(captchaText) == 6:
         print("Valid Captcha Text")
-        insertCaptchaText(appiumDriver=appiumDriver,captchaText=captcha_text)
+        insertCaptchaText(appiumDriver=appiumDriver,captchaText=captchaText)
         appiumDriver.implicitly_wait(5)
         clickLoginButton(appiumDriver=appiumDriver)
         return
@@ -151,5 +149,4 @@ def verifyCaptchaData(appiumDriver,length):
         print("Extracting Captcha Text Again")
         appiumDriver.implicitly_wait(5)
         captcha_text = extractCaptchaText(appiumDriver=appiumDriver)
-        length = len(captcha_text)
-        verifyCaptchaData(appiumDriver= appiumDriver , length=length)
+        verifyCaptchaData(appiumDriver= appiumDriver , captchaText= captcha_text)
