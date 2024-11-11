@@ -135,6 +135,7 @@ def extractCaptchaText(appiumDriver):
 
 def verifyCaptchaData(appiumDriver,captchaText):
     print("Captcha Text is: ",captchaText)
+    print("Captcha Text Length is: ",len(captchaText))
     appiumDriver.implicitly_wait(5)
     if len(captchaText) == 6:
         print("Valid Captcha Text")
