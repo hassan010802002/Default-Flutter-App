@@ -5,19 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 void main() {
-  // FlutterDriver? driver;
-  //
-  // setUpAll(() async {
-  //   driver = await FlutterDriver.connect(
-  //     dartVmServiceUrl: "http://192.168.30.217:5000/W0WPGA3IHhg=/ws",
-  //   );
-  // });
-  //
-  // tearDownAll(() async {
-  //   if (driver != null) {
-  //     driver!.close();
-  //   }
-  // });
   runApp(const MyApp());
 }
 
@@ -60,7 +47,15 @@ class _MyHomePageState extends State<MyHomePage> {
               _isPageLoaded = true;
             });
             if (_isPageLoaded) {
-              await triggerButtonClick();
+              await triggerButtonClick(
+                userId: "Nariox7",
+                loginId: "Nariox708",
+                password: "Abcd@1234",
+                appPath: "C:\\Users\\Hassan.Saeed\\Desktop\\Default-Flutter-App\\build\\app\\outputs\\flutter-apk\\app-debug.apk",
+                deviceName: "Hassan-Emu-Pro",
+                driverPath: "C:\\Users\\Hassan.Saeed\\Documents\\Programs\\ZIPs\\chromedriver-win64\\chromedriver.exe",
+                serverUrl: "http://192.168.30.235:8000",
+              );
             }
             if (url.toString().contains("")) {}
           },
