@@ -95,6 +95,7 @@ def clickRefreshButton(appiumDriver):
     element = appiumDriver.find_element(AppiumBy.XPATH,"/html/body/form/div[2]/div[2]/div[1]/div/div[6]/i")
     print("Element Found")
     element.click()
+    appiumDriver.implicitly_wait(5)
 
 
 def insertCaptchaText(appiumDriver , captchaText):
