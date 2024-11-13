@@ -20,8 +20,9 @@ def click_button():
         app = data.get("app")
         deviceName = data.get("deviceName")
         driverPath = data.get("driverPath")
+        captchaText = data.get("captchaText")
 
-        automate_webview_button_click(server_url=serverUrl,app_path=app,chromedriver_path=driverPath,device_name=deviceName,login_id=loginId,user_id=userId,password=password)
+        automate_webview_button_click(server_url=serverUrl,app_path=app,chromedriver_path=driverPath,device_name=deviceName,login_id=loginId,user_id=userId,password=password,captcha_text=captchaText)
         return jsonify({"status": "success", "message": "Button clicked successfully!"}) , 200
     except Exception as e:
         return jsonify({"status": "error", "message": e.__str__()}), 400

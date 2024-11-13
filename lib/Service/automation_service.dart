@@ -7,12 +7,13 @@ Future<void> triggerButtonClick({
   required String? loginId,
   required String? userId,
   required String? password,
+  required String? captchaText,
   required String? appPath,
   required String? deviceName,
   required String? driverPath,
   required String? serverUrl,
 }) async {
-  final url = Uri.parse("http://192.168.30.235:6000/click-button");
+  final url = Uri.parse("http://192.168.1.2:6000/click-button");
 
   try {
     final response = await http.post(
@@ -28,6 +29,7 @@ Future<void> triggerButtonClick({
         "deviceName": deviceName!,
         "driverPath": driverPath!,
         "serverUrl": serverUrl!,
+        "captchaText": captchaText!,
       }),
     );
     log("Appium Server Response is: ${response.body}", name: "appium service");
