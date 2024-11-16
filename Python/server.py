@@ -1,31 +1,66 @@
-from flask import Flask, jsonify , request
-from appium_automation import automate_webview_button_click
+from login_automation import login_webview_automation
+from fastapi import FastAPI, HTTPException,BackgroundTasks
+from pydantic import BaseModel
+import logging
+from fastapi.middleware.cors import CORSMiddleware
 
-app = Flask(__name__)
+app = FastAPI()
 
-@app.route('/click-button', methods=['POST'])
-def click_button():
+# Enable CORS for all origins (adjust as needed)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins. Replace with specific domains for security.
+    allow_methods=["*"],  # Allow all HTTP methods.
+    allow_headers=["*"],  # Allow all headers.
+)
+
+# Set up logging
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logger = logging.getLogger(__name__)
+
+# Request model validation
+class AutomationRequest(BaseModel):
+    serverUrl: str
+    loginId: str
+    userId: str
+    password: str
+    app: str
+    deviceName: str
+    driverPath: str
+    captchaText: str
+
+def run_automation(request_data: AutomationRequest):
+    # Run the automation task
+    login_webview_automation(
+        server_url=request_data.serverUrl,
+        app_path=request_data.app,
+        chromedriver_path=request_data.driverPath,
+        device_name=request_data.deviceName,
+        login_id=request_data.loginId,
+        user_id=request_data.userId,
+        password=request_data.password,
+        captcha_text=request_data.captchaText,
+    )
+
+@app.post("/click-button")
+async def click_button(request: AutomationRequest , background_tasks: BackgroundTasks):
+    """
+    Endpoint to handle automation requests for Appium.
+    """
+    logger.info("Received automation request.")
     try:
-        # Access the JSON data from the request body
-        if not request.is_json:
-            return jsonify({"status": "error", "message": "Request must be JSON"}), 400
-        data = request.get_json(force=True)
-        
-        # Extract specific data fields
-        serverUrl = data.get("serverUrl")
-        print("Server Url",serverUrl)
-        loginId = data.get("loginId")
-        userId = data.get("userId")
-        password = data.get("password")
-        app = data.get("app")
-        deviceName = data.get("deviceName")
-        driverPath = data.get("driverPath")
-        captchaText = data.get("captchaText")
-
-        automate_webview_button_click(server_url=serverUrl,app_path=app,chromedriver_path=driverPath,device_name=deviceName,login_id=loginId,user_id=userId,password=password,captcha_text=captchaText)
-        return jsonify({"status": "success", "message": "Button clicked successfully!"}) , 200
+        # Add the automation task to run in the background
+        background_tasks.add_task(
+            run_automation,
+            request,
+        )
+        logger.info("Button clicked successfully.")
+        return {"status": "success", "message": "Button clicked successfully!"}
     except Exception as e:
-        return jsonify({"status": "error", "message": e.__str__()}), 400
+        print(f"Error: {e}")
+        raise HTTPException(status_code=400, detail=str(e))
 
+# Run the app in ASGI mode (use uvicorn for production)
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=6000)
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=6000)
